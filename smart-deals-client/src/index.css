@@ -5,6 +5,13 @@
 @plugin "daisyui/theme" {
   name: "light";
   default: true;
-  --color-primary: blue;
+  --color-primary: #632EE3;
   --color-secondary: teal;
+}
+.btn-primary{
+  @apply bg-gradient-to-r from-[#632ee3] to-[#9f62f2] border-none text-white
+
+}
+.btn-primary:hover{
+  @apply opacity-90
 }

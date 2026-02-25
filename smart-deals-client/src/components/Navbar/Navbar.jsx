@@ -54,7 +54,7 @@ const Navbar = () => {
             {links}
           </ul>
         </div>
-        <a className="btn btn-ghost text-xl flex items-center gap-2 font-black italic tracking-tighter hover:scale-105 transition-transform">
+        <Link to="/" className="btn btn-ghost text-xl flex items-center gap-2 font-black italic tracking-tighter hover:scale-105 transition-transform">
           <div className="bg-blue-600 p-1.5 rounded-lg shadow-sm">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -73,13 +73,13 @@ const Navbar = () => {
           <span>
             Smart<span className="text-blue-600">Deals</span>
           </span>
-        </a>
+        </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{links}</ul>
       </div>
       <div className="navbar-end">
-      {user ?  <a onClick={handleSignOut} className="btn">Sign Out</a>:
+      {user ?  <a onClick={handleSignOut} className="btn btn-primary">Sign Out</a>:
        <Link to="/register" className="btn">Login</Link>
       }
       </div>
