@@ -31,18 +31,19 @@ const router = createBrowserRouter([
         Component: Register,
       },
       {
-        path:'myProducts',
-        element:<MyProducts></MyProducts>
+        path: "myProducts",
+        element: <MyProducts></MyProducts>,
       },
       {
-        path:'myBids',
-        element:<MyBids></MyBids>
+        path: "myBids",
+        element: <MyBids></MyBids>,
       },
       {
-        path:'productDetails/:id',
-        loader:({params})=>fetch(`http://localhost:3000/products/${params.id}`),
-        Component:ProductDetails,
-      }
+        path: "productDetails/:id",
+        loader: ({ params }) =>
+          fetch(`http://localhost:3000/products/${params.id}`),
+        Component: ProductDetails,
+      },
     ],
   },
 ]);

@@ -27,7 +27,6 @@ app.get("/", (req, res) => {
 async function run() {
   try {
     await client.connect();
-
     const db = client.db("smartDeals_DB");
     const productsCollection = db.collection("products");
     const bidsCollection = db.collection("bids");

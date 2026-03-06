@@ -80,7 +80,7 @@ const ProductDetails = () => {
           bidModalRef.current.close();
           form.reset(); // ফর্ম খালি করা
           
-          // নতুন বিডটি লিস্টে তখনি যোগ করে দেওয়া (UI আপডেট)
+         
           setBids([...bids, newBid]);
 
           Swal.fire({
@@ -232,3 +232,5 @@ const ProductDetails = () => {
 };
 
 export default ProductDetails;
+
+// 57.1  start
