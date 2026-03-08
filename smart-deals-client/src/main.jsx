@@ -12,6 +12,7 @@ import Register from "./components/Register/Register.jsx";
 import MyProducts from "./components/MyProducts/MyProducts.jsx";
 import MyBids from "./components/MyBids/MyBids.jsx";
 import ProductDetails from "./components/ProductDetails/ProductDetails.jsx";
+import PrivateRoute from "./Routes/PrivateRoute.jsx";
 
 const router = createBrowserRouter([
   {
@@ -32,17 +33,17 @@ const router = createBrowserRouter([
       },
       {
         path: "myProducts",
-        element: <MyProducts></MyProducts>,
+        element:<PrivateRoute><MyProducts></MyProducts></PrivateRoute> ,
       },
       {
         path: "myBids",
-        element: <MyBids></MyBids>,
+        element:<PrivateRoute><MyBids></MyBids></PrivateRoute>  ,
       },
       {
         path: "productDetails/:id",
         loader: ({ params }) =>
           fetch(`http://localhost:3000/products/${params.id}`),
-        Component: ProductDetails,
+        element: <PrivateRoute><ProductDetails></ProductDetails></PrivateRoute>,
       },
     ],
   },
@@ -54,3 +55,4 @@ createRoot(document.getElementById("root")).render(
     </AuthProvider>
   </StrictMode>,
 );
+// 57.4 start
