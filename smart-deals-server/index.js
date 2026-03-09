@@ -3,8 +3,16 @@ const cors = require("cors");
 require('dotenv').config()
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const app = express();
+const admin = require("firebase-admin");
 const port = process.env.PORT || 3000;
-console.log(process.env)
+
+var serviceAccount = require("./smart-deals-firebase-admin-key.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+});
+
+
 // middleware
 app.use(cors());
 app.use(express.json());
@@ -16,7 +24,7 @@ const logger=(req,res,next)=>{
   next()
 }
 
-const verifyFireBaseToken=(req,res,next)=>{
+const verifyFireBaseToken=async(req,res,next)=>{
   console.log('in the verify middleware ',req.headers.authorization);
   if(!req.headers.authorization){
     // do not allow to go 
@@ -26,9 +34,19 @@ const verifyFireBaseToken=(req,res,next)=>{
   if(!token){
     return res.status(401).send({message:'unauthorized access '})
   }
+
+try{
+const userInfo= await admin.auth().verifyIdToken(token);
+req.token_email=userInfo.email
+console.log('after token validation',userInfo)
+   next()
+}
+catch{
+  return res.status(401).send({message:'unauthorized access '})
+}
   // verify token 
   
-  next()
+ 
 }
 
 const uri =
@@ -132,6 +150,9 @@ async function run() {
       const email = req.query.email;
       const query = {};
       if (email) {
+        if(email !==req.token_email){
+          return res.status(403).send({message:"forbidden access"})
+        }
         query.buyer_email = email;
       }
 
@@ -140,7 +161,7 @@ async function run() {
       res.send(result);
     });
   //  product er id die dhekho kto jon bid korche 
-    app.get('/products/bids/:productId',async(req,res)=>{
+    app.get('/products/bids/:productId',verifyFireBaseToken,async(req,res)=>{
       const productId=req.params.productId;
       const query={product_id:productId}
       const cursor=bidsCollection.find(query).sort({bid_price:-1})

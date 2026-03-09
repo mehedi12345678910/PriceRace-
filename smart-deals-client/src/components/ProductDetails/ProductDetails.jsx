@@ -29,13 +29,17 @@ const ProductDetails = () => {
     usage,
     description,
     seller_contact,
-    email: seller_email, // email নামটা ক্ল্যাশ এড়াতে রিনেম করা হলো
+    email: seller_email, 
   } = product;
 
   // ৩. বিড ডেটা ফেচ করার জন্য useEffect
   useEffect(() => {
     if (_id) {
-      fetch(`http://localhost:3000/products/bids/${_id}`) // Template literal (``) ব্যবহার করুন
+      fetch(`http://localhost:3000/products/bids/${_id}`,{
+        headers:{
+          authorization:`Bearer ${user.accessToken}`
+        }
+      }) // Template literal (``) ব্যবহার করুন
         .then((res) => res.json())
         .then((data) => {
           setBids(data);
